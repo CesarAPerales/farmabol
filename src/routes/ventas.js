@@ -1,23 +1,24 @@
 // src/routes/ventas.js
 // Registro de ventas. Al vender, se descuenta el stock automáticamente.
-// Esta es la versión REFACTORIZADA del código (ver README, sección refactorización).
 const express = require('express');
 const pool = require('../config/db');
 const { requireLogin } = require('../middleware/auth');
 const router = express.Router();
 
-// Muestra el formulario de venta con la lista de productos disponibles
-router.get('/', requireLogin, async (req, res) => {
+// --- Funciones pequeñas extraídas tras refactorizar (Extract Method) ---
+
+// Carga los datos necesarios para la vista de ventas: productos disponibles
+// y las ultimas ventas. Antes esta consulta estaba duplicada en dos lugares
+// (code smell: Duplicated Code). Ahora se reutiliza desde una sola funcion.
+async function cargarDatosVista() {
   const [productos] = await pool.query('SELECT * FROM productos WHERE stock > 0 ORDER BY nombre');
   const [ventas] = await pool.query(
     `SELECT v.id, p.nombre, v.cantidad, v.total, v.fecha
      FROM ventas v JOIN productos p ON v.producto_id = p.id
      ORDER BY v.fecha DESC LIMIT 20`
   );
-  res.render('ventas', { user: req.session.user, productos, ventas, error: null });
-});
-
-// --- Funciones pequeñas extraídas tras refactorizar (Extract Method) ---
+  return { productos, ventas };
+}
 
 // Busca un producto y valida que exista
 async function obtenerProducto(productoId) {
@@ -50,6 +51,12 @@ async function registrarVenta(producto, cantidad, usuarioId) {
   }
 }
 
+// Muestra el formulario de venta con la lista de productos disponibles
+router.get('/', requireLogin, async (req, res) => {
+  const { productos, ventas } = await cargarDatosVista();
+  res.render('ventas', { user: req.session.user, productos, ventas, error: null });
+});
+
 // Procesa una nueva venta
 router.post('/', requireLogin, async (req, res) => {
   const { producto_id, cantidad } = req.body;
@@ -60,12 +67,7 @@ router.post('/', requireLogin, async (req, res) => {
     return res.redirect('/ventas');
   }
   if (!hayStockSuficiente(producto, cant)) {
-    const [productos] = await pool.query('SELECT * FROM productos WHERE stock > 0 ORDER BY nombre');
-    const [ventas] = await pool.query(
-      `SELECT v.id, p.nombre, v.cantidad, v.total, v.fecha
-       FROM ventas v JOIN productos p ON v.producto_id = p.id
-       ORDER BY v.fecha DESC LIMIT 20`
-    );
+    const { productos, ventas } = await cargarDatosVista();
     return res.render('ventas', {
       user: req.session.user, productos, ventas,
       error: `Stock insuficiente. Disponible: ${producto.stock}`
