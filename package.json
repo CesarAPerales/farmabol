@@ -1,0 +1,21 @@
+{
+  "name": "farmabol",
+  "version": "1.0.0",
+  "description": "Sistema de control de inventarios y ventas para Farmacias Bolivianas Unidas (FARMABOL)",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node src/app.js",
+    "init-db": "node db/init.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0"
+  }
+}
