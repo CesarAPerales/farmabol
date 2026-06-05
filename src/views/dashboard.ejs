@@ -1,0 +1,48 @@
+<%- include('partials/header') %>
+
+<h1 class="page-title">Dashboard</h1>
+<p class="page-sub">Resumen en tiempo real del inventario y las ventas de hoy.</p>
+
+<div class="cards">
+  <div class="card">
+    <div class="label">Ventas de hoy (Bs)</div>
+    <div class="value"><%= Number(totalDia).toFixed(2) %></div>
+  </div>
+  <div class="card">
+    <div class="label">N° de ventas hoy</div>
+    <div class="value"><%= numVentas %></div>
+  </div>
+  <div class="card">
+    <div class="label">Productos en catálogo</div>
+    <div class="value"><%= inventario.total_productos %></div>
+  </div>
+  <div class="card">
+    <div class="label">Unidades en stock</div>
+    <div class="value"><%= inventario.unidades %></div>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>⚠️ Productos con stock bajo (menos de 5 unidades)</h2>
+  <% if (stockBajo.length === 0) { %>
+    <p style="color: var(--gris)">No hay productos con stock bajo. Todo en orden.</p>
+  <% } else { %>
+    <table>
+      <thead>
+        <tr><th>Código</th><th>Nombre</th><th>Laboratorio</th><th>Stock</th></tr>
+      </thead>
+      <tbody>
+        <% stockBajo.forEach(p => { %>
+          <tr>
+            <td><%= p.codigo %></td>
+            <td><%= p.nombre %></td>
+            <td><%= p.laboratorio || '—' %></td>
+            <td><span class="badge badge-bajo"><%= p.stock %></span></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,53 @@
+<%- include('partials/header') %>
+
+<h1 class="page-title">Ventas</h1>
+<p class="page-sub">Registra una venta. El stock se descuenta automáticamente.</p>
+
+<% if (error) { %>
+  <div class="alert alert-error"><%= error %></div>
+<% } %>
+
+<div class="panel" style="max-width:520px">
+  <h2>Nueva venta</h2>
+  <form action="/ventas" method="POST">
+    <div class="form-group">
+      <label>Producto</label>
+      <select name="producto_id" required>
+        <option value="">— Selecciona un producto —</option>
+        <% productos.forEach(p => { %>
+          <option value="<%= p.id %>"><%= p.nombre %> (stock: <%= p.stock %> · Bs <%= Number(p.precio).toFixed(2) %>)</option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Cantidad</label>
+      <input type="number" name="cantidad" min="1" value="1" required>
+    </div>
+    <button type="submit" class="btn">Registrar venta</button>
+  </form>
+</div>
+
+<div class="panel">
+  <h2>Últimas ventas</h2>
+  <% if (ventas.length === 0) { %>
+    <p style="color: var(--gris)">Aún no hay ventas registradas.</p>
+  <% } else { %>
+    <table>
+      <thead>
+        <tr><th>Producto</th><th>Cantidad</th><th>Total (Bs)</th><th>Fecha</th></tr>
+      </thead>
+      <tbody>
+        <% ventas.forEach(v => { %>
+          <tr>
+            <td><%= v.nombre %></td>
+            <td><%= v.cantidad %></td>
+            <td><%= Number(v.total).toFixed(2) %></td>
+            <td><%= new Date(v.fecha).toLocaleString('es-BO') %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>

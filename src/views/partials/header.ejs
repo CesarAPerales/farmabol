@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FARMABOL · Control de Inventarios</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <% if (typeof user !== 'undefined' && user) { %>
+  <nav class="navbar">
+    <div class="brand">💊 FARMABOL</div>
+    <div class="links">
+      <a href="/dashboard">Dashboard</a>
+      <a href="/productos">Productos</a>
+      <a href="/ventas">Ventas</a>
+      <span class="user-tag"><%= user.usuario %> (<%= user.rol %>)</span>
+      <a href="/logout" class="logout">Salir</a>
+    </div>
+  </nav>
+  <% } %>
+  <main class="container">
