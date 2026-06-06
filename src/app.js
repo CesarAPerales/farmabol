@@ -46,6 +46,19 @@ app.use((req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor FARMABOL corriendo en el puerto ${PORT}`);
-});
+
+// Inicializa la base de datos (crea tablas y datos si no existen) y luego
+// arranca el servidor. Esto permite que funcione en la nube sin pasos manuales.
+const { setupDatabase } = require('../db/setup');
+
+setupDatabase()
+  .then(() => {
+    console.log('Base de datos lista.');
+    app.listen(PORT, () => {
+      console.log(`Servidor FARMABOL corriendo en el puerto ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('No se pudo inicializar la base de datos:', err.message);
+    process.exit(1);
+  });
