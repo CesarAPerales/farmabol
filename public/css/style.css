@@ -1,0 +1,150 @@
+/* public/css/style.css
+   Tema FARMABOL: limpio, profesional, con acento verde médico. */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@300;400;500;600&display=swap');
+
+:root {
+  --verde: #0f766e;
+  --verde-claro: #5eead4;
+  --verde-suave: #ecfdf5;
+  --tinta: #0f172a;
+  --gris: #64748b;
+  --gris-suave: #f1f5f9;
+  --blanco: #ffffff;
+  --rojo: #dc2626;
+  --rojo-suave: #fef2f2;
+  --ambar: #d97706;
+  --borde: #e2e8f0;
+  --sombra: 0 1px 3px rgba(15,23,42,.08), 0 8px 24px rgba(15,23,42,.06);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background:
+    radial-gradient(1200px 600px at 100% -10%, var(--verde-suave), transparent),
+    #f8fafc;
+  color: var(--tinta);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+h1, h2, h3 { font-family: 'Fraunces', serif; letter-spacing: -0.02em; }
+
+/* ---------- Navbar ---------- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: var(--blanco);
+  border-bottom: 1px solid var(--borde);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.brand { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 700; color: var(--verde); }
+.links { display: flex; align-items: center; gap: 1.25rem; }
+.links a { text-decoration: none; color: var(--gris); font-weight: 500; transition: color .15s; }
+.links a:hover { color: var(--verde); }
+.user-tag { font-size: .85rem; color: var(--gris); background: var(--gris-suave); padding: .35rem .7rem; border-radius: 999px; }
+.logout { color: var(--rojo) !important; }
+
+/* ---------- Layout ---------- */
+.container { max-width: 1000px; margin: 0 auto; padding: 2.5rem 2rem; }
+.footer { text-align: center; padding: 2rem; color: var(--gris); font-size: .85rem; }
+
+.page-title { font-size: 2rem; margin-bottom: .25rem; }
+.page-sub { color: var(--gris); margin-bottom: 2rem; }
+
+/* ---------- Tarjetas ---------- */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 2rem; }
+.card {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--sombra);
+}
+.card .label { color: var(--gris); font-size: .85rem; text-transform: uppercase; letter-spacing: .05em; }
+.card .value { font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 700; color: var(--verde); margin-top: .3rem; }
+
+.panel {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+  padding: 1.75rem;
+  box-shadow: var(--sombra);
+  margin-bottom: 1.75rem;
+}
+.panel h2 { font-size: 1.25rem; margin-bottom: 1rem; }
+
+/* ---------- Tablas ---------- */
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: .8rem .6rem; border-bottom: 1px solid var(--borde); }
+th { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--gris); }
+tr:last-child td { border-bottom: none; }
+.badge { padding: .25rem .6rem; border-radius: 999px; font-size: .78rem; font-weight: 600; }
+.badge-bajo { background: var(--rojo-suave); color: var(--rojo); }
+.badge-ok { background: var(--verde-suave); color: var(--verde); }
+
+/* ---------- Botones ---------- */
+.btn {
+  display: inline-block;
+  background: var(--verde);
+  color: var(--blanco);
+  border: none;
+  padding: .65rem 1.2rem;
+  border-radius: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: .95rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .15s, transform .1s;
+}
+.btn:hover { background: #0d5d56; }
+.btn:active { transform: scale(.98); }
+.btn-sm { padding: .4rem .8rem; font-size: .85rem; }
+.btn-danger { background: var(--rojo); }
+.btn-danger:hover { background: #b91c1c; }
+.btn-ghost { background: transparent; color: var(--verde); border: 1px solid var(--verde); }
+.btn-ghost:hover { background: var(--verde-suave); }
+
+.actions { display: flex; gap: .5rem; }
+
+/* ---------- Formularios ---------- */
+.form-group { margin-bottom: 1.1rem; }
+.form-group label { display: block; font-size: .9rem; font-weight: 500; margin-bottom: .35rem; }
+.form-group input, .form-group select {
+  width: 100%;
+  padding: .7rem .9rem;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: .95rem;
+}
+.form-group input:focus, .form-group select:focus { outline: 2px solid var(--verde-claro); border-color: var(--verde); }
+
+/* ---------- Login ---------- */
+.login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+.login-card {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 20px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: var(--sombra);
+}
+.login-card .brand { font-size: 1.8rem; text-align: center; margin-bottom: .25rem; }
+.login-card .sub { text-align: center; color: var(--gris); margin-bottom: 1.75rem; font-size: .9rem; }
+.login-card .btn { width: 100%; }
+.hint { margin-top: 1.25rem; font-size: .8rem; color: var(--gris); text-align: center; }
+
+/* ---------- Alertas ---------- */
+.alert { padding: .8rem 1rem; border-radius: 10px; margin-bottom: 1.25rem; font-size: .9rem; }
+.alert-error { background: var(--rojo-suave); color: var(--rojo); }
+
+.toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
